@@ -3,27 +3,33 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B.svg)](https://streamlit.io/)
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-VectorStore-green.svg)](https://www.trychroma.com/)
-[![License](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
+[![Supervised by Elvorix](https://img.shields.io/badge/Supervised%20by-Elvorix-blueviolet.svg)](#-academic--diploma-context)
 
-An end-to-end, production-oriented **Retrieval-Augmented Generation (RAG)** pipeline designed for campus and institutional policy queries. The system features a decoupled modular architecture, hybrid search (BM25 sparse + dense embeddings), dynamic outdated policy filtering, and dual client interfaces (**Streamlit Web Application** & **CustomTkinter Desktop GUI**).
+An end-to-end, production-ready **Retrieval-Augmented Generation (RAG)** pipeline developed to answer university campus policy and student service queries accurately. The architecture balances lexical precision with deep semantic intent, implements dynamic outdated document pruning, and offers dual frontends (**Streamlit Web Application** & **CustomTkinter Desktop GUI**).
+
+---
+
+## 🏛️ Academic & Diploma Context
+
+This project was built and submitted as the final capstone project for the **Natural Language Processing (NLP) Track** within the **Artificial Intelligence Diploma**, developed under the supervision and guidance of **Elvorix**.
+
+- **Organization:** Elvorix
+- **Domain:** Natural Language Processing (NLP), Information Retrieval & Large Language Models
+- **Deliverables:** Modular Pipeline Architecture, Outdated Policy Guardrails, Vector Indexing, Jupyter Evaluation Lab, and Dual GUI/Web Deployments.
 
 ---
 
 ## 🌟 Key Features
 
-- **Decoupled Modular Pipeline:** Every stage from text sanitization to prompting is isolated in dedicated scripts (`01_` to `07_`).
-- **Hybrid Retrieval Engine:** Combines lexical term frequency matching (**BM25Okapi**) with semantic dense vectors (**all-MiniLM-L6-v2**) via a configurable $\alpha$ balancing parameter.
-- **Strict Policy Guardrails:** Automated filtering logic discards `OUTDATED` policies before prompt construction to guarantee zero historical hallucinations.
-- **Defensive API Architecture:** Built-in fallback mechanisms handle API token absence gracefully without crashing the UI.
-- **Dual Client Interfaces:**
-  - **Cloud:** Streamlit Web Application with interactive parameter sliders.
-  - **Desktop:** Standalone CustomTkinter dark-mode GUI executing inferences on asynchronous background threads.
+- **Decoupled Modular Architecture:** Built across discrete pipeline scripts (`01_` through `07_`) adhering to industry MLOps and software design standards.
+- **Hybrid Retrieval System:** Combines sparse lexical keyword retrieval (**BM25Okapi**) with 384-dimensional dense semantic vectors (**Sentence Transformers: `all-MiniLM-L6-v2`**), blended via an adjustable weighting parameter ($\alpha$).
+- **Dynamic Policy Guardrails:** Filters out chunks marked as `OUTDATED` before prompt assembly to completely prevent temporal hallucinations (e.g., legacy pricing or obsolete office schedules).
+- **Grounded Citations:** LLM prompt template forces structured citations (`[Source 1]`, `[Source 2]`) strictly tied to active retrieved chunks.
+- **Defensive Error Handling:** Includes fallback mechanisms that ensure UI responsiveness even in the event of missing API credentials.
+- **Dual Presentation Layers:**
+  - **Cloud:** Interactive Streamlit web interface with real-time parameter tuning and candidate breakdown cards.
+  - **Desktop:** CustomTkinter GUI featuring asynchronous background threads to maintain responsiveness during vector inference.
 
 ---
 
-## 🏗️ Architecture & Pipeline Flow
-
-```text
-Raw Corpus (01) ➡️ Cleaning (02) ➡️ Chunking (03) ➡️ Hybrid Search (04)
-                                                               ⬇️
-Client UI (Streamlit / Tkinter) ⬅️ Grounded LLM (07) ⬅️ Outdated Filter (06) ⬅️ ChromaDB (05)
+## 🏗️ Architecture & Pipeline Overview
