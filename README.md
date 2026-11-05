@@ -33,3 +33,59 @@ This project was built and submitted as the final capstone project for the **Nat
 ---
 
 ## 🏗️ Architecture & Pipeline Overview
+
+```text
+Raw Documents (01) ➡️ Cleaning & Normalization (02) ➡️ Sliding-Window Chunking (03)
+                                                                ⬇️
+Client Interfaces ⬅️ Grounded Prompting (07) ⬅️ Policy Filtering (06) ⬅️ Vector Store & Hybrid Search (04/05)
+
+Module,Filename,Key Functions & Responsibilities
+Stage 1,01_documents.py,"Institutional policy dataset enriched with metadata (status, effective_date, category)."
+Stage 2,02_preprocessing.py,"Text sanitization, regex normalization, and symbol retention (preserving prices and hours)."
+Stage 3,03_chunking.py,"Sliding window chunker (chunk_size=35, overlap=7) preserving contextual continuity."
+Stage 4,04_vector_representation.py,Hybrid search engine computing BM25 and Cosine similarity with min-max normalization.
+Stage 5,05_create_chroma_store.py,Persistent vector index storage using ChromaDB.
+Stage 6,06_retrieve_context.py,Context builder that separates active sources from dropped OUTDATED candidates.
+Stage 7,07_prompting.py,"LLM prompt engineering, OpenRouter integration, and defensive fallback generation."
+
+## ⚙️ Installation & Local Setup
+1. Clone the Repository
+git clone [https://github.com/Alhousainy23/campus-rag-assistant.git](https://github.com/Alhousainy23/campus-rag-assistant.git)
+cd campus-rag-assistant
+
+2. Configure Virtual Environment
+# Windows (PowerShell)
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+# Linux / macOS
+python3 -m venv venv
+source venv/bin/activate
+3. Install Required Dependencies
+pip install -r requirements.txt
+4. Set Environment Variables
+Create a .env file in the project root:
+OPENROUTER_API_KEY="your_openrouter_api_key"
+OPENROUTER_MODEL="openai/gpt-4o-mini"
+## 🚀 Running the Project
+# 🌐 Web Interface (Streamlit)
+streamlit run streamlit_app.py
+
+## 💻 Desktop Interface (CustomTkinter)
+python customtkinter_app.py
+
+## 📓 Evaluation & Research Lab (Jupyter Notebook)
+Run the complete pipeline verification, stage-by-stage tables, and scoring breakdowns:
+jupyter notebook Simple_RAG_Lab.ipynb
+
+## 📊 Evaluation & Verification Results
+Query Category,Query Example,Filter Enforcement,Expected & Verified Output
+Policy Update,"""How much does campus printing cost?""",doc_02 (Outdated) dropped; doc_01 (Current) retained,Returns $0.05 B&W and $0.15 Color with [Source 1] citation.
+Operational Hours,"""When does the library close on Friday?""",Retained active library schedule,Grounded Friday closing at 6:00 PM.
+Permits & Parking,"""What are the commuter parking rates?""",Retained active transport guide,Cites $150 semester fee for Lots A and B.
+
+## 🛡️ License & Acknowledgements
+Developed as part of the AI & NLP Diploma Program under the supervision of Elvorix.
+
+Distributed under the MIT License.
+
+
